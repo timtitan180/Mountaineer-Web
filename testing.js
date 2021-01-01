@@ -1,0 +1,98 @@
+
+
+
+const express = require('express');
+const mongoose = require('mongoose');
+const path = require('path');
+const fs = require('fs');
+const bodyParser = require('body-parser');
+
+const app = express();
+
+// app.use(express.static('public'));
+
+app.use(bodyParser.urlencoded({extended:true}));
+
+app.use(bodyParser.json());
+
+const port = 7012;
+
+const db = mongoose.connection;
+
+mongoose.connect("mongodb+srv://timtudosa18:Snake150!@first-cluster.fz0ml.mongodb.net/authenticationdb?retryWrites=true&w=majority",{useNewUrlParser:true,useUnifiedTopology:true},()=>{
+  db.on('error',(err)=>{
+    if(err) {
+      console.log(err);
+    }
+    console.log("MONGODB is connected!");
+  });
+});
+   
+
+//Add a schema that has a username object, password object and email object
+UserSchema = new mongoose.Schema({
+  username:{type:String},
+  email:{type:String},
+  password:{type:String},
+
+});
+
+const User = new mongoose.model('User',UserSchema);
+
+app.use(express.static(path.join(__dirname,'public')));
+
+app.get('/',(req,res)=>{
+  res.send("form-signup.html");
+});
+
+
+app.post('/signup',function(request,response) {
+  //get access to the input fields(username,password,email)
+  var username = request.body.username;
+  var password = request.body.password;
+  var email = request.body.email;
+  var errors = [];
+  if(username.length == 0 || password.length == 0 || email.length == 0) {
+    errors.push("Please input all fields");
+  }
+
+  if(password.length < 10) {
+    errors.push("Password must be at least 10 characters long");
+  }
+
+  if(!email.includes("@")) {
+    errors.push("Please enter a real email");
+  }
+
+  if(errors.length < 1) {
+    console.log("Signing you up!"
+    );
+    try {
+    newUser = new User({username:username,password:password,email:email});
+    console.log("Account created successfuly");
+    }
+    catch(err) {
+      console.log(err);
+    }
+  }
+});
+
+
+app.get('/login',(req,res)=>{
+  res.send("login.html");
+});
+
+app.post("/login",(req,res)=>{
+
+});
+
+
+app.listen(port,function(err){
+  try {
+    console.log(`Server listening on port${port}`);
+  }
+
+  catch(err) {
+    console.log(`Cannot process request. Reason: ${err}`);
+  }
+});
