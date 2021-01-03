@@ -9,7 +9,9 @@ const bodyParser = require('body-parser');
 
 const app = express();
 
-// app.use(express.static('public'));
+app.use(express.static('public'));
+
+app.set('view engine','ejs');
 
 app.use(bodyParser.urlencoded({extended:true}));
 
@@ -42,7 +44,7 @@ const User = new mongoose.model('User',UserSchema);
 app.use(express.static(path.join(__dirname,'public')));
 
 app.get('/',(req,res)=>{
-  res.send("form-signup.html");
+  res.render("mainpage.ejs");
 });
 
 
@@ -67,6 +69,7 @@ app.post('/signup',function(request,response) {
   if(errors.length < 1) {
     console.log("Signing you up!"
     );
+    res.redirect("/dashboard");
     try {
     newUser = new User({username:username,password:password,email:email});
     console.log("Account created successfuly");
@@ -79,10 +82,20 @@ app.post('/signup',function(request,response) {
 
 
 app.get('/login',(req,res)=>{
-  res.send("login.html");
+  res.render("login.ejs");
 });
 
 app.post("/login",(req,res)=>{
+    var username = req.body.username;
+    var password = req.body.password;
+    User.find({username:username,password:password},err=>{
+      if(err) {
+        console.log("Account does not match any on the database");
+      }
+      else {
+        res.redirect("/dashboard");
+      }
+    });
 
 });
 
