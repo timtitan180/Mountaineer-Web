@@ -54,6 +54,14 @@ app.post('/signup',function(request,response) {
   var password = request.body.password;
   var email = request.body.email;
   var errors = [];
+  const newUser = new User({username:username,password:password,email:email});
+      newUser.save((err)=>{
+        if(err) {
+          console.log(err);
+        }
+        console.log("New User saved");
+      });
+  });
   if(username.length == 0 || password.length == 0 || email.length == 0) {
     errors.push("Please input all fields");
   }
