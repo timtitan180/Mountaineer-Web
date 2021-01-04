@@ -47,6 +47,10 @@ app.get('/',(req,res)=>{
   res.render("mainpage.ejs");
 });
 
+app.get('/signup',(req,res)=>{
+    res.render("form-signup.ejs");
+});
+
 
 app.post('/signup',function(request,response) {
   //get access to the input fields(username,password,email)
@@ -61,7 +65,6 @@ app.post('/signup',function(request,response) {
         }
         console.log("New User saved");
       });
-  });
   if(username.length == 0 || password.length == 0 || email.length == 0) {
     errors.push("Please input all fields");
   }
@@ -86,7 +89,9 @@ app.post('/signup',function(request,response) {
       console.log(err);
     }
   }
+  response.redirect('dashboard.ejs');
 });
+
 
 
 app.get('/login',(req,res)=>{
