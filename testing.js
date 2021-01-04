@@ -21,16 +21,8 @@ const port = 7012;
 
 const db = mongoose.connection;
 
-mongoose.connect("mongodb+srv://timtudosa18:Snake150!@first-cluster.fz0ml.mongodb.net/authenticationdb?retryWrites=true&w=majority",{useNewUrlParser:true,useUnifiedTopology:true},()=>{
-  db.on('error',(err)=>{
-    if(err) {
-      console.log(err);
-    }
-    console.log("MONGODB is connected!");
-  });
-});
+mongoose.connect("mongodb+srv://timtudosa18:Snake150!@first-cluster.fz0ml.mongodb.net/authenticationdb?retryWrites=true&w=majority",{useNewUrlParser:true,useUnifiedTopology:true}).then(()=>{console.log("MONGODB Database is connected!")}).catch((err)=>{console.log(err)});
    
-
 //Add a schema that has a username object, password object and email object
 UserSchema = new mongoose.Schema({
   username:{type:String},
@@ -53,18 +45,15 @@ app.get('/signup',(req,res)=>{
 
 
 app.post('/signup',function(request,response) {
-  //get access to the input fields(username,password,email)
   var username = request.body.username;
   var password = request.body.password;
   var email = request.body.email;
   var errors = [];
   const newUser = new User({username:username,password:password,email:email});
-      newUser.save((err)=>{
-        if(err) {
-          console.log(err);
-        }
-        console.log("New User saved");
+      newUser.save().then(()=>{console.log("User saved to database!")}).catch((err)=>{
+        console.log(err);
       });
+
   if(username.length == 0 || password.length == 0 || email.length == 0) {
     errors.push("Please input all fields");
   }
@@ -101,14 +90,13 @@ app.get('/login',(req,res)=>{
 app.post("/login",(req,res)=>{
     var username = req.body.username;
     var password = req.body.password;
-    User.find({username:username,password:password},err=>{
-      if(err) {
-        console.log("Account does not match any on the database");
-      }
-      else {
-        res.redirect("/dashboard");
-      }
-    });
+    User.find({username:username,password:password}).then(user=>{
+      console.log(user);
+      console.log("User has been saved!");
+      res.redirect("/dashboard.ejs");
+    }).catch((err)=>{
+      console.log(err);
+    }); 
 
 });
 
