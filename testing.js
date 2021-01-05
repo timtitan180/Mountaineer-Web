@@ -9,13 +9,9 @@ const bodyParser = require('body-parser');
 
 const app = express();
 
-app.use(express.static('public'));
-
 app.set('view engine','ejs');
 
-app.use(bodyParser.urlencoded({extended:true}));
-
-app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended:false}));
 
 const port = 7012;
 
@@ -23,7 +19,6 @@ const db = mongoose.connection;
 
 mongoose.connect("mongodb+srv://timtudosa18:Snake150!@first-cluster.fz0ml.mongodb.net/authenticationdb?retryWrites=true&w=majority",{useNewUrlParser:true,useUnifiedTopology:true}).then(()=>{console.log("MONGODB Database is connected!")}).catch((err)=>{console.log(err)});
    
-//Add a schema that has a username object, password object and email object
 UserSchema = new mongoose.Schema({
   username:{type:String},
   email:{type:String},
@@ -44,15 +39,18 @@ app.get('/signup',(req,res)=>{
 });
 
 
-app.post('/signup',function(request,response) {
+app.post('/signup',function(req,res) {
+  var firstName = request.body.firstName;
+  var lastName = request.body.lastName;
   var username = request.body.username;
   var password = request.body.password;
   var email = request.body.email;
+  console.log(firstName);
+  console.log(lastName); 
+  console.log(username);
+  console.log(password);
+  console.log(email);
   var errors = [];
-  const newUser = new User({username:username,password:password,email:email});
-      newUser.save().then(()=>{console.log("User saved to database!")}).catch((err)=>{
-        console.log(err);
-      });
 
   if(username.length == 0 || password.length == 0 || email.length == 0) {
     errors.push("Please input all fields");
@@ -67,17 +65,14 @@ app.post('/signup',function(request,response) {
   }
 
   if(errors.length < 1) {
+    const newUser = new User({username:username,password:password,email:email});
+    newUser.save().then(()=>{console.log("User saved to database!")}).catch((err)=>{
+      console.log(err);
+    });
     console.log("Signing you up!"
     );
-    res.redirect("/dashboard");
-    try {
-    newUser = new User({username:username,password:password,email:email});
-    console.log("Account created successfuly");
-    }
-    catch(err) {
-      console.log(err);
-    }
   }
+  console.log(errors);
   response.redirect('dashboard.ejs');
 });
 
@@ -93,11 +88,16 @@ app.post("/login",(req,res)=>{
     User.find({username:username,password:password}).then(user=>{
       console.log(user);
       console.log("User has been saved!");
-      res.redirect("/dashboard.ejs");
+      res.redirect("/dashboard");
     }).catch((err)=>{
       console.log(err);
+      res.redirect("/signup");
     }); 
 
+});
+
+app.get('/dashboard',(req,res)=>{
+  res.render("dashboard.ejs");
 });
 
 
