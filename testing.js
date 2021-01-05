@@ -85,14 +85,18 @@ app.get('/login',(req,res)=>{
 app.post("/login",(req,res)=>{
     var username = req.body.username;
     var password = req.body.password;
-    User.find({username:username,password:password}).then(user=>{
-      console.log(user);
-      console.log("User is found. Signing you in...");
-      res.redirect("/dashboard");
-    }).catch((err)=>{
-      console.log(err);
-      res.redirect("/login");
-    }); 
+    console.log(username);
+    console.log(password);
+    User.find((users,err)=>{
+      if(users) {
+        console.log(users);
+        console.log("User found. Signing you in!");
+      }
+      else {
+        console.log(err);
+        console.log("User does not exist");
+      }
+    });
 
 });
 
