@@ -45,6 +45,7 @@ app.post('/signup',function(req,res) {
   var lastName = req.body.lastName;
   var username = req.body.username;
   var password = req.body.password;
+  var verifiedPassword = req.body.verifiedPassword;
   console.log(firstName.length);
   var errors = [];
 
@@ -56,18 +57,22 @@ app.post('/signup',function(req,res) {
     errors.push("Password must be at least 10 characters long");
   }
 
+  if(password != verifiedPassword) {
+    errors.push("Passwords do not match");
+  }
+
 
   if(errors.length < 1) {
-    const newUser = new User({firstName:firstName,lastName:lastName,username:username,password:password);
+    const newUser = new User({firstName:firstName,lastName:lastName,username:username,password:password});
     newUser.save().then(()=>{console.log("User saved to database!")}).catch((err)=>{
       console.log(err);
     });
     console.log("Signing you up!"
     );
-    response.redirect('dashboard.ejs');
+    res.redirect('dashboard.ejs');
   }
   else {
-      res.send(`<div><h1>errors<h1></div>`);    
+      res.redirect("/signup");    
   }
 });
 
@@ -82,11 +87,11 @@ app.post("/login",(req,res)=>{
     var password = req.body.password;
     User.find({username:username,password:password}).then(user=>{
       console.log(user);
-      console.log("User has been saved!");
+      console.log("User is found. Signing you in...");
       res.redirect("/dashboard");
     }).catch((err)=>{
       console.log(err);
-      res.redirect("/signup");
+      res.redirect("/login");
     }); 
 
 });
