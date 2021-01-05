@@ -11,7 +11,7 @@ const app = express();
 
 app.set('view engine','ejs');
 
-app.use(bodyParser.urlencoded({extended:false}));
+app.use(bodyParser.urlencoded({extended:true}));
 
 const port = 7012;
 
@@ -31,28 +31,23 @@ const User = new mongoose.model('User',UserSchema);
 app.use(express.static(path.join(__dirname,'public')));
 
 app.get('/',(req,res)=>{
-  res.render("mainpage.ejs");
+  res.render("mainpage.ejs"); 
 });
 
 app.get('/signup',(req,res)=>{
-    res.render("form-signup.ejs");
+    res.render("form-signup");
 });
 
 
 app.post('/signup',function(req,res) {
-  var firstName = request.body.firstName;
-  var lastName = request.body.lastName;
-  var username = request.body.username;
-  var password = request.body.password;
-  var email = request.body.email;
-  console.log(firstName);
-  console.log(lastName); 
-  console.log(username);
-  console.log(password);
-  console.log(email);
+  var firstName = req.body.firstName;
+  var lastName = req.body.lastName;
+  var username = req.body.username;
+  var password = req.body.password;
+  console.log(firstName.length);
   var errors = [];
 
-  if(username.length == 0 || password.length == 0 || email.length == 0) {
+  if(firstName.length == 0 || lastName.length == 0 || username.length == 0 || password.length == 0) {
     errors.push("Please input all fields");
   }
 
@@ -60,9 +55,6 @@ app.post('/signup',function(req,res) {
     errors.push("Password must be at least 10 characters long");
   }
 
-  if(!email.includes("@")) {
-    errors.push("Please enter a real email");
-  }
 
   if(errors.length < 1) {
     const newUser = new User({username:username,password:password,email:email});
@@ -71,9 +63,11 @@ app.post('/signup',function(req,res) {
     });
     console.log("Signing you up!"
     );
+    response.redirect('dashboard.ejs');
   }
-  console.log(errors);
-  response.redirect('dashboard.ejs');
+  else {
+      res.send(`<div><h1>errors<h1></div>`);    
+  }
 });
 
 
