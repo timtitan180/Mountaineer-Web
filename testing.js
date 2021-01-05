@@ -11,7 +11,7 @@ const app = express();
 
 app.set('view engine','ejs');
 
-app.use(bodyParser.urlencoded({extended:true}));
+app.use(bodyParser.urlencoded({extended:false}));
 
 const port = 7012;
 
@@ -20,8 +20,9 @@ const db = mongoose.connection;
 mongoose.connect("mongodb+srv://timtudosa18:Snake150!@first-cluster.fz0ml.mongodb.net/authenticationdb?retryWrites=true&w=majority",{useNewUrlParser:true,useUnifiedTopology:true}).then(()=>{console.log("MONGODB Database is connected!")}).catch((err)=>{console.log(err)});
    
 UserSchema = new mongoose.Schema({
+  firstName:{type:String},
+  lastName:{type:String},
   username:{type:String},
-  email:{type:String},
   password:{type:String},
 
 });
@@ -57,7 +58,7 @@ app.post('/signup',function(req,res) {
 
 
   if(errors.length < 1) {
-    const newUser = new User({username:username,password:password,email:email});
+    const newUser = new User({firstName:firstName,lastName:lastName,username:username,password:password);
     newUser.save().then(()=>{console.log("User saved to database!")}).catch((err)=>{
       console.log(err);
     });
