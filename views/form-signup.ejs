@@ -21,12 +21,16 @@
     <div class="m">
     </div>
   </nav>
-  <form action="/" id="signupForm">
+  <form method="POST" action="/signup" >
     <div class="button-menu">
       <div class="field">
           <label for="First Name">First Name</label>
         <div class="control">
-          <input class="input is-primary" id="name" placeholder="First Name" name="getName">
+          <input class="input is-primary" id="name" placeholder="First Name" name="firstName">
+      </div>
+      <label for="Last Name">Last Name</label>
+        <div class="control">
+          <input class="input is-primary" id="name" placeholder="First Name" name="lastName">
       </div>
           <label for="Username">Username</label>
         <div class="control">
