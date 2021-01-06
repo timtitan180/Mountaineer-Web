@@ -37,6 +37,16 @@ UserSchema = new mongoose.Schema({
 
 });
 
+PostsSchema = new mongoose.Schema({
+  Posts:{type:String}
+});
+
+var testvariablewithEjs = [];
+
+testvariablewithEjs.push("first push");
+testvariablewithEjs.push("second push");
+
+
 const User = new mongoose.model('User',UserSchema);
 
 app.use(express.static(path.join(__dirname,'public')));
@@ -46,7 +56,7 @@ app.get('/',(req,res)=>{
 });
 
 app.get('/signup',(req,res)=>{
-    res.render("form-signup");
+    res.render("form-signup",{testVariable:testvariablewithEjs});
 });
 
 
@@ -57,6 +67,7 @@ app.post('/signup',function(req,res) {
   var password = req.body.password;
   var verifiedPassword = req.body.verifiedPassword;
   console.log(firstName.length);
+
 
   var errors = [];
 
@@ -74,7 +85,6 @@ app.post('/signup',function(req,res) {
 
 
   if(errors.length > 0) {
-    console.log(errors);
     res.redirect('/signup');
   }
   else {
@@ -91,17 +101,16 @@ app.post('/signup',function(req,res) {
 
 
 app.get('/login',(req,res)=>{
-  res.render("login.ejs");
+  res.render("login.ejs",{errors:[ ]});
 });
 
 app.post("/login",(req,res)=>{
     var loginErrors = [];
     var username = req.body.username;
     var password = req.body.password;
-    console.log(username);
-    console.log(password);
-    User.find((user)=>{
+    User.find((user,err)=>{
       if(!user) {
+        console.log(err);
         loginErrors.push("Username or password does not exist");
         console.log(loginErrors);
         res.render('login',{errors:loginErrors});
@@ -119,8 +128,6 @@ app.get('/dashboard',(req,res)=>{
 });
 
 ejsLint("login.ejs");
-
-app.use(flash());
 
 app.listen(port,function(err){
   try {
