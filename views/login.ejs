@@ -16,6 +16,11 @@
 <body>
     <div>
         <form method="POST" action="/login">
+            <div>
+             <% errors.forEach((error)=>{ %>
+                    <p style="color:red"><%=error%></p>
+               <% }); %>
+            </div>
             <label>Username</label>
             <input placeholder="Enter your username or email" name="username"/>
             <label>Password</label>
