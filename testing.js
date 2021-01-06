@@ -6,6 +6,9 @@ const mongoose = require('mongoose');
 const path = require('path');
 const fs = require('fs');
 const bodyParser = require('body-parser');
+const ejsLint = require('ejs-lint');
+const cookieParser = require('cookie-parser');
+const session = require('express-session');
 
 const app = express();
 
@@ -13,12 +16,19 @@ app.set('view engine','ejs');
 
 app.use(bodyParser.urlencoded({extended:false}));
 
+// app.use(cookieParser());
+
+// app.use(session({secret:'secret',cookie: { maxAge: 60000,resave:false,saveUnitalized:false}})); 
+
+// const flash = require('connect-flash');
+
 const port = 7012;
 
 const db = mongoose.connection;
 
 mongoose.connect("mongodb+srv://timtudosa18:Snake150!@first-cluster.fz0ml.mongodb.net/authenticationdb?retryWrites=true&w=majority",{useNewUrlParser:true,useUnifiedTopology:true}).then(()=>{console.log("MONGODB Database is connected!")}).catch((err)=>{console.log(err)});
    
+
 UserSchema = new mongoose.Schema({
   firstName:{type:String},
   lastName:{type:String},
@@ -32,7 +42,7 @@ const User = new mongoose.model('User',UserSchema);
 app.use(express.static(path.join(__dirname,'public')));
 
 app.get('/',(req,res)=>{
-  res.render("mainpage.ejs"); 
+  res.render("mainpage"); 
 });
 
 app.get('/signup',(req,res)=>{
@@ -47,6 +57,7 @@ app.post('/signup',function(req,res) {
   var password = req.body.password;
   var verifiedPassword = req.body.verifiedPassword;
   console.log(firstName.length);
+
   var errors = [];
 
   if(firstName.length == 0 || lastName.length == 0 || username.length == 0 || password.length == 0) {
@@ -62,17 +73,18 @@ app.post('/signup',function(req,res) {
   }
 
 
-  if(errors.length < 1) {
-    const newUser = new User({firstName:firstName,lastName:lastName,username:username,password:password});
-    newUser.save().then(()=>{console.log("User saved to database!")}).catch((err)=>{
-      console.log(err);
-    });
-    console.log("Signing you up!"
-    );
-    res.redirect('dashboard.ejs');
+  if(errors.length > 0) {
+    console.log(errors);
+    res.redirect('/signup');
   }
   else {
-      res.redirect("/signup");    
+      const newUser = new User({firstName:firstName,lastName:lastName,username:username,password:password});
+      newUser.save().then(()=>{console.log("User saved to database!")}).catch((err)=>{
+      console.log(err);
+      });
+      console.log("Signing you up!"
+      );
+      res.redirect("/dashboard");    
   }
 });
 
@@ -83,27 +95,32 @@ app.get('/login',(req,res)=>{
 });
 
 app.post("/login",(req,res)=>{
+    var loginErrors = [];
     var username = req.body.username;
     var password = req.body.password;
     console.log(username);
     console.log(password);
-    User.find((users,err)=>{
-      if(users) {
-        console.log(users);
-        console.log("User found. Signing you in!");
+    User.find((user)=>{
+      if(!user) {
+        loginErrors.push("Username or password does not exist");
+        console.log(loginErrors);
+        res.render('login',{errors:loginErrors});
+        res.redirect('/login');
       }
       else {
-        console.log(err);
-        console.log("User does not exist");
+        res.render('dashboard');
       }
     });
 
 });
 
 app.get('/dashboard',(req,res)=>{
-  res.render("dashboard.ejs");
+  res.render("dashboard");
 });
 
+ejsLint("login.ejs");
+
+app.use(flash());
 
 app.listen(port,function(err){
   try {
