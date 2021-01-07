@@ -16,12 +16,6 @@ app.set('view engine','ejs');
 
 app.use(bodyParser.urlencoded({extended:false}));
 
-// app.use(cookieParser());
-
-// app.use(session({secret:'secret',cookie: { maxAge: 60000,resave:false,saveUnitalized:false}})); 
-
-// const flash = require('connect-flash');
-
 const port = 7012;
 
 const db = mongoose.connection;
@@ -38,16 +32,13 @@ UserSchema = new mongoose.Schema({
 });
 
 PostsSchema = new mongoose.Schema({
+  Id:{type:Number},
   Posts:{type:String}
 });
 
-var testvariablewithEjs = [];
-
-testvariablewithEjs.push("first push");
-testvariablewithEjs.push("second push");
-
-
 const User = new mongoose.model('User',UserSchema);
+
+const Post = new mongoose.model('Post',PostsSchema);
 
 app.use(express.static(path.join(__dirname,'public')));
 
@@ -56,7 +47,7 @@ app.get('/',(req,res)=>{
 });
 
 app.get('/signup',(req,res)=>{
-    res.render("form-signup",{testVariable:testvariablewithEjs});
+    res.render("form-signup");
 });
 
 
@@ -126,6 +117,13 @@ app.post("/login",(req,res)=>{
 app.get('/dashboard',(req,res)=>{
   res.render("dashboard");
 });
+
+// app.post('/dashboard',(req,res)=>{
+//   var post = req.body.addedPost;
+//   posts = [];
+//   posts.push(post);
+//   res.render('dashboard',{renderPosts:posts});
+// }); 
 
 ejsLint("login.ejs");
 
