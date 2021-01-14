@@ -16,14 +16,10 @@
     <nav class="navbar-menu navbar is-primary">
     <div><h1 class="head">MOUNTAINEER<span class="fas fa-mountain"></span></h1>
     </div>
-    <div class="navbar-menu">
-    </div>
-    <div class="m">
-    </div>
   </nav>
   <form method="POST" action="/signup" >
     <% errors.forEach((error)=>{ %>
-      <div style="height:100px;width:160px; margin-left: 500px; background-color:rgba(0,0,0,0.4);text-align:center;">
+      <div style="margin-top:40px;height:100px;width:240px; margin-left: 850px; background-color:rgba(0,0,0,0.4);text-align:center;">
       <p style="color:red"><%=error%></p>
       </div>
     <% }); %>
@@ -60,10 +56,13 @@
         </div>
         <div class="wrapper">
           <button class="button is-info is-outlined" id="button" type="submit">Submit</button>
+          <a  style="display:block" href="/login">Login</a>
         </div>
       </div>
       </form>
-      <a href="/login">Login</a>
+      <div class="footer-container">
+      <footer>Tim Tudosa @ 2020</footer>
+    </div>
   </body>
 
 </html>
