@@ -22,35 +22,46 @@
     </div>
   </nav>
   <form method="POST" action="/signup" >
-    <div class="button-menu">
-      <div class="field">
+    <% errors.forEach((error)=>{ %>
+      <div style="height:100px;width:160px; margin-left: 500px; background-color:rgba(0,0,0,0.4);text-align:center;">
+      <p style="color:red"><%=error%></p>
+      </div>
+    <% }); %>
+    <div class="signupContainer">
+      <div class="field"> 
           <label for="First Name">First Name</label>
+      </div>
         <div class="control">
           <input class="input is-primary" id="name" placeholder="First Name" name="firstName">
       </div>
+      <div class="field">
       <label for="Last Name">Last Name</label>
+    </div>
         <div class="control">
           <input class="input is-primary" id="name" placeholder="First Name" name="lastName">
       </div>
+      <div class="field">
           <label for="Username">Username</label>
+        </div>
         <div class="control">
         <input class="input is-primary" id="inputedUsername" placeholder="Username" name="username">
       </div>
-    </div>
         <div class="field">
           <label for="Password">Password</label>
+        </div>
         <div class="control">
             <input class="input is-primary password" id="first-password" placeholder="Password" name="password">
         </div>
-        <div>
         <div class="field">
           <label for="Renter Password">Verify Password</label>
+        </div>
         <div class="control">
-          <input class="input is-primary" required placeholder="Verify Password" name="verifiedPassword"/>
+          <input class="input is-primary" placeholder="Verify Password" name="verifiedPassword"/>
         </div>
         <div class="wrapper">
           <button class="button is-info is-outlined" id="button" type="submit">Submit</button>
         </div>
+      </div>
       </form>
       <a href="/login">Login</a>
   </body>
