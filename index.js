@@ -14,7 +14,7 @@ app.set('view engine','ejs');
 
 app.use(bodyParser.urlencoded({extended:false}));
 
-const port = process.env.PORT || 7012;
+const port = 7012;
 
 const db = mongoose.connection;
 
@@ -125,7 +125,7 @@ app.get('/dashboard',(req,res)=>{
 
 ejsLint("login.ejs");
 
-app.listen(port,function(err){
+app.listen(process.env.PORT || port,function(err){
   try {
     console.log(`Server listening on port${port}`);
   }
