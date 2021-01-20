@@ -4,11 +4,9 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const path = require('path');
-const fs = require('fs');
 const bodyParser = require('body-parser');
 const ejsLint = require('ejs-lint');
-const cookieParser = require('cookie-parser');
-const session = require('express-session');
+
 
 const app = express();
 
@@ -22,6 +20,7 @@ const db = mongoose.connection;
 
 mongoose.connect("mongodb+srv://timtudosa18:Snake150!@first-cluster.fz0ml.mongodb.net/authenticationdb?retryWrites=true&w=majority",{useNewUrlParser:true,useUnifiedTopology:true}).then(()=>{console.log("MONGODB Database is connected!")}).catch((err)=>{console.log(err)});
    
+//User fields that will be saved to the database using mongoose
 
 UserSchema = new mongoose.Schema({
   firstName:{type:String},
@@ -33,7 +32,8 @@ UserSchema = new mongoose.Schema({
 
 PostsSchema = new mongoose.Schema({
   Id:{type:Number},
-  Posts:{type:String}
+  Posts:{type:String},
+  Date:{type:Date,default:Date.now()}
 });
 
 const User = new mongoose.model('User',UserSchema);
@@ -47,7 +47,7 @@ app.get('/',(req,res)=>{
 });
 
 app.get('/signup',(req,res)=>{
-    res.render("form-signup");
+    res.render("form-signup",{errors:[]});
 });
 
 
@@ -76,6 +76,8 @@ app.post('/signup',function(req,res) {
 
 
   if(errors.length > 0) {
+    console.log(errors);
+    res.render("form-signup",{errors:errors});
     res.redirect('/signup');
   }
   else {
@@ -90,6 +92,7 @@ app.post('/signup',function(req,res) {
 });
 
 
+//Login Route
 
 app.get('/login',(req,res)=>{
   res.render("login.ejs",{errors:[ ]});
@@ -118,12 +121,7 @@ app.get('/dashboard',(req,res)=>{
   res.render("dashboard");
 });
 
-// app.post('/dashboard',(req,res)=>{
-//   var post = req.body.addedPost;
-//   posts = [];
-//   posts.push(post);
-//   res.render('dashboard',{renderPosts:posts});
-// }); 
+
 
 ejsLint("login.ejs");
 
