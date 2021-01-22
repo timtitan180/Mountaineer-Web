@@ -14,6 +14,8 @@ app.set('view engine','ejs');
 
 app.use(bodyParser.urlencoded({extended:false}));
 
+app.use(express.static(path.join(__dirname,"public")));
+
 const port = 7012;
 
 const db = mongoose.connection;
@@ -30,15 +32,7 @@ UserSchema = new mongoose.Schema({
 
 });
 
-PostsSchema = new mongoose.Schema({
-  Id:{type:Number},
-  Posts:{type:String},
-  Date:{type:Date,default:Date.now()}
-});
-
 const User = new mongoose.model('User',UserSchema);
-
-const Post = new mongoose.model('Post',PostsSchema);
 
 app.use(express.static(path.join(__dirname,'public')));
 
