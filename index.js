@@ -3,9 +3,11 @@
 
 const express = require('express');
 const mongoose = require('mongoose');
+require('dotenv').config();
 const path = require('path');
 const bodyParser = require('body-parser');
 const ejsLint = require('ejs-lint');
+const { Console } = require('console');
 
 
 const app = express();
@@ -20,7 +22,7 @@ const port = 7012;
 
 const db = mongoose.connection;
 
-mongoose.connect("mongodb+srv://timtudosa18:Snake150!@first-cluster.fz0ml.mongodb.net/authenticationdb?retryWrites=true&w=majority",{useNewUrlParser:true,useUnifiedTopology:true}).then(()=>{console.log("MONGODB Database is connected!")}).catch((err)=>{console.log(err)});
+mongoose.connect(process.env.MONGODB_URI,{useNewUrlParser:true,useUnifiedTopology:true}).then(()=>{console.log("MONGODB Database is connected!")}).catch((err)=>{console.log(err)});
    
 //User fields that will be saved to the database using mongoose
 
@@ -37,6 +39,8 @@ const User = new mongoose.model('User',UserSchema);
 app.use(express.static(path.join(__dirname,'public')));
 
 app.get('/',(req,res)=>{
+  console.log(process.env.MONGODB_URI);
+  console.log(process.env.NODE_ENV);
   res.render("mainpage"); 
 });
 
