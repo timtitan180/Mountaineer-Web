@@ -1,0 +1,56 @@
+body,html,.navbar {
+    background: linear-gradient(to right, rgba(54, 9, 109, 0.55),rgba(55, 213, 214, 0.60)),url("https://cdn.britannica.com/67/19367-050-885866B4/Valley-Taurus-Mountains-Turkey.jpg");
+    width: 100%;
+    height: 100%;
+    -webkit-background-size: cover;
+    background-size: cover;
+  
+  }
+  
+  .header {
+      text-align:center;
+      height:100px;
+      width:235px;
+      margin-top:79px;
+      background-color:rgba(0,0,0,0.4);
+      position:absolute;
+      margin-left:560px;
+      color:yellow;
+  }
+  
+  .login-container {
+      justify-content:space-around;
+      align-items:center;
+      position:absolute;
+      margin-left:550px;
+      margin-top:200px;
+      height:240px;
+      width:240px;
+      background-color:rgba(0,0,0,0.4);
+  
+      
+  }
+  
+  input{
+      width:70%;
+      display: block;
+       margin : 0 auto;
+       border-radius:3px;
+       border:none;
+       background-color:yellow;
+  }
+  
+  #first-input {
+      margin-top:50px;
+      margin-bottom:10px;
+  }
+  
+  #button-wrapper {
+      align-items:center;
+  }
+  
+  button {
+      margin-top:5px;
+      display:block;
+      margin-left:85px;
+  }

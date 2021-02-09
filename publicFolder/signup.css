@@ -1,0 +1,118 @@
+* {
+  box-sizing: border-box;
+}
+
+body,html,.navbar {
+  background: linear-gradient(to right, rgba(54, 9, 109, 0.55),rgba(55, 213, 214, 0.60)),url("iced.jpg");
+  width: 100%;
+  overflow-y:hidden;
+  /* height: 100%; */
+  -webkit-background-size: cover;
+  background-size: cover;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+}
+
+input {
+  border: 2px solid red;
+}
+
+.signupContainer {
+  margin-top:60px;
+  z-index: 10;
+  text-align: center;
+  background-color: rgba(220,220,220,0.60);
+  height: 430px;
+  width: 260px;
+  margin-left: 900px;
+  margin-bottom:900px;
+  position: absolute;
+ 
+}
+
+/* .buttons-menu {
+  margin-left: auto;
+  margin-right: auto;
+  height: 300px;
+  width: 250px;
+  position: relative;
+  background-color: rgba(220,220,220,0.60);
+  background-size: cover;
+  display: block;
+} */
+.login {
+  display: inline-block;
+  text-align: left;
+  left: auto;
+  right: auto;
+  /* left: 560px;
+  top: 251px;
+  height: 300px;
+  margin-bottom: 0px;
+  margin-top: 0px;
+  margin-left: 56px;
+  position: absolute; */
+
+}
+#username {
+  width: 70%;
+  margin-top: 121px;
+}
+
+ /* #password {
+  margin-
+  width: 100%;
+} */
+
+#passsword-label {
+    width: 70%;
+    margin-top: 0px;
+    margin-left: 4px;
+
+}
+#button {
+  width: 30%;
+}
+
+.button {
+  margin-top: 4px;
+  margin-left: 102px;
+  display: inline-block;
+  justify-content: space-around;
+  /* width: 100%; */
+  margin: 1px;
+	box-shadow:inset 0px -3px 7px 0px #29bbff;
+	background-color:transparent;
+	border-radius:3px;
+	border:1px solid #0b0e07;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:15px;
+	padding:9px 23px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #263666;
+}
+.button:hover {
+	background-color:transparent;
+}
+.button:active {
+  display: inline-block;
+	position:relative;
+	top:1px;
+}
+.control {
+  display: inline-block;
+  text-align: center;
+}
+
+.footer-container {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color:rgba(0,0,0,0.4);
+  color: yellowgreen;
+  text-align: center;
+}

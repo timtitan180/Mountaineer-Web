@@ -16,7 +16,7 @@ app.set('view engine','ejs');
 
 app.use(bodyParser.urlencoded({extended:false}));
 
-app.use(express.static(path.join(__dirname,"public")));
+app.use(express.static(path.join(__dirname,"publicFolder")));
 
 const port = 7012;
 
@@ -39,8 +39,6 @@ const User = new mongoose.model('User',UserSchema);
 app.use(express.static(path.join(__dirname,'public')));
 
 app.get('/',(req,res)=>{
-  console.log(process.env.MONGODB_URI);
-  console.log(process.env.NODE_ENV);
   res.render("mainpage"); 
 });
 
