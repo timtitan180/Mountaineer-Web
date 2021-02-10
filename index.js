@@ -3,7 +3,7 @@
 
 const express = require('express');
 const mongoose = require('mongoose');
-require('dotenv').config();
+// require('dotenv').config();
 const path = require('path');
 const bodyParser = require('body-parser');
 const ejsLint = require('ejs-lint');
