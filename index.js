@@ -7,7 +7,6 @@ require('dotenv').config();
 const path = require('path');
 const bodyParser = require('body-parser');
 const ejsLint = require('ejs-lint');
-const { Console } = require('console');
 
 
 const app = express();
