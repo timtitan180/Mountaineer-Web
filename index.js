@@ -98,7 +98,7 @@ app.post("/login",(req,res)=>{
     var loginErrors = [];
     var username = req.body.username;
     var password = req.body.password;
-    User.find((user,err)=>{
+    User.find({username:username,password:password},(user,err)=>{
       if(!user) {
         console.log(err);
         loginErrors.push("Username or password does not exist");
