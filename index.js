@@ -7,7 +7,7 @@ const mongoose = require('mongoose');
 const path = require('path');
 const bodyParser = require('body-parser');
 const ejsLint = require('ejs-lint');
-
+require('./model.js');
 
 const app = express();
 
@@ -21,19 +21,8 @@ const port = 7012;
 
 const db = mongoose.connection;
 
-mongoose.connect(process.env.MONGODB_URI,{useNewUrlParser:true,useUnifiedTopology:true}).then(()=>{console.log("MONGODB Database is connected!")}).catch((err)=>{console.log(err)});
-   
-//User fields that will be saved to the database using mongoose
+mongoose.connect('mongodb+srv://timtudosa18:Snake150!@first-cluster.fz0ml.mongodb.net/authenticationdb?retryWrites=true&w=majority',{useNewUrlParser:true,useUnifiedTopology:true}).then(()=>{console.log("MONGODB Database is connected!")}).catch((err)=>{console.log(err)});
 
-UserSchema = new mongoose.Schema({
-  firstName:{type:String},
-  lastName:{type:String},
-  username:{type:String},
-  password:{type:String},
-
-});
-
-const User = new mongoose.model('User',UserSchema);
 
 app.use(express.static(path.join(__dirname,'public')));
 
@@ -90,18 +79,16 @@ app.post('/signup',function(req,res) {
 //Login Route
 
 app.get('/login',(req,res)=>{
-  res.render("login.ejs",{errors:[ ]});
+  res.render("login.ejs",{errors:[]});
 });
 
 app.post("/login",(req,res)=>{
     var loginErrors = [];
     var username = req.body.username;
     var password = req.body.password;
-    User.find({username:username,password:password},(user,err)=>{
+    User.find({username:username,password:password},(user)=>{
       if(!user) {
-        console.log(err);
         loginErrors.push("Username or password does not exist");
-        console.log(loginErrors);
         res.render('login',{errors:loginErrors});
         res.redirect('/login');
       }
@@ -129,3 +116,5 @@ app.listen(process.env.PORT || port,function(err){
     console.log(`Cannot process request. Reason: ${err}`);
   }
 });
+
+module.export = app;
