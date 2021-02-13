@@ -10,6 +10,7 @@ const testSchema = new Schema({name:{type:String,required:true}});
 
 
 
+//Mongoose connection test
 
 describe('Testing mongoose database',()=>{
     before(()=>{
@@ -26,11 +27,10 @@ describe('Testing mongoose database',()=>{
     });
 });
 
+
+//mongoose model test
 describe('Test Database',()=>{
 
-    //test that a newly created model from mongoose works
-    //so I will need to intialize a model object using the schema above.
-    //save a random name to the model and assert that name equals the random name entered
 
     var Name = new mongoose.model('Name',testSchema);
     var name = "John";
