@@ -31,7 +31,7 @@ app.get('/',(req,res)=>{
 });
 
 app.get('/signup',(req,res)=>{
-    res.render("form-signup",{errors:[]});
+    res.render("signup",{errors:[]});
 });
 
 
@@ -61,7 +61,7 @@ app.post('/signup',function(req,res) {
 
   if(errors.length > 0) {
     console.log(errors);
-    res.render("form-signup",{errors:errors});
+    res.render("signup",{errors:errors});
     res.redirect('/signup');
   }
   else {
