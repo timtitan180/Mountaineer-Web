@@ -4,28 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title><link rel = "stylesheet"
-   type = "text/css" href ="login.css" />
+   type="text/css" href="login.css" />
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.min.css">
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css">
 </head>
 <body>
-    <div id="container">
-    <div id="first-column">
+    <div class="grid">
+    <div class="column" style="padding-bottom:40px;">
         <img src="https://scx2.b-cdn.net/gfx/news/2019/2-nature.jpg" id="image"/>
     </div>
+      <div class="column" style="height:1100px;border-left: 1px solid black;">
         <form method="POST" action="/login">
-            <div>
+            <div class="errors">
              <% errors.forEach((error)=>{ %>  
-                    <p style="color:red"><%=error%></p>
-                    
+                    <p style="color:red"><%=error%></p> 
                <% }); %>
             </div>
             <label>Username</label>
-            <input  class="input is-info" placeholder="Enter your username or email" name="username"/>
+            <input autocomplete="off" class="input is-info" placeholder="Enter your username or email" name="username"/>
             <label>Password</label>
             <p class="control has-icons-left">
-            <input class="input" type="password" placeholder="Password">
+            <input autocomplete="off" class="input" type="password" placeholder="Password">
             <span class="icon is-small is-left">
              <i class="fas fa-lock"></i>
             </span>
@@ -36,9 +36,11 @@
                   <button style="color:rebeccapurple" type="submit" class="button is-success">
                     Login
                   </button>
+                  <p>Dont have an account? <span><a href="/signup">Sign Up</a></span></p>
                 </p>
               </div>
             </form>
+          </div>
     </div>
     </div>
 </div>

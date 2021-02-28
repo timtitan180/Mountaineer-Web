@@ -8,9 +8,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.min.css">
     <title>Document</title>
     <style>
-        body,html {
+        html {
     background: linear-gradient(to right, rgba(54, 9, 109, 0.55),rgba(55, 213, 214, 0.60)),url("iced.jpg");
-    overflow:hidden;
+    background-size:cover;
+    overflow: hidden;
     width: 100%;
     height: 100%;
     position: relative;
@@ -27,7 +28,7 @@
     }
 
     .headerBox {
-        margin-left:770px;
+        margin-left:900px;
         height:240px;
         width:240px;
         border:10px solid white;
@@ -37,20 +38,10 @@
 
         .headerText {
             margin-top: 100px;
+            margin-left:0.97rem;
             color:white;
             font-weight: bold;
         }
-/* .main {
-    height:250px;
-    width:250px;
-    background-color:rgba(208,208,208,0.45);
-    margin-left:540px;
-    margin-top:10px;
-    align-items:center;
-    justify-content:space-between;
-    display:grid;
-    
-} */
 
 button {
     margin-bottom: 4px;;
@@ -61,13 +52,17 @@ button {
     box-shadow:1px 2px 4px -2px;
 }
 
+button text {
+    font-size: medium;
+}
+
 .main-container {
     align-items: center;
     justify-content: space-evenly;
     height:250px;
     width:250px;
     background-color: rgba(208,208,208,0.60);
-    margin-left:780px;
+    margin-left:900px;
     margin-top: 30px;
 }
 
@@ -81,6 +76,8 @@ button {
         <button class="button is-primary is-light"><a href="/signup">Sign Up</a</button>
         <button class="button is-info is-light"><a href="/login">Log In</a></button>
     </div>
+    <div></div>
+    <div></div>
     
 </body>
 </html>

@@ -12,8 +12,11 @@
         body,html {
             background-image: url("https://static01.nyt.com/images/2019/04/28/opinion/sunday/28sanzaro/merlin_153898551_5956db5a-b6ac-496e-a13a-45055370562c-superJumbo.jpg");
             height:100%;
-            width:100%;
+            /* width:100%; */
+            top:0;
+            right:0;
             background-attachment: fixed;
+            overflow: hidden;
 
         }
             
@@ -23,6 +26,7 @@
             height: 200px;
             width:400px;
             border-radius: 4px;
+        
         }
 
         .navbar {
@@ -189,32 +193,39 @@
 
         function addPost() {
 
-            var addedPost = document.createElement("p");
+            mainContainer.innerHTML += `<div style="display:flex-grid;border:2px solid white"><p style="color:yellow">${post.value}</p><button style="red" class="delete">DELETE</button></div>`
+
+            deletePost = document.querySelectorAll(".delete");
+
+            for(var i=0;i<deletePost.length;i++){
+                deletePost[i].onclick = function(){
+                    this.parentNode.remove();
+                }
+             }
+        //     var addedPost = document.createElement("div");
             
-            addedPost.classList.add("posts");
+        //     addedPost.classList.add("posts");
             
-            addedPost.innerText = post.value;
+        //     addedPost.innerText = post.value;
 
-            var deleteButton = document.createElement("button");
+        //     var deleteButton = document.createElement("button");
 
-            deleteButton.classList.add("delete-button");
+        //     deleteButton.classList.add("delete-button");
 
-            deleteButton.textContent = "DELETE";
+        //     deleteButton.textContent = "DELETE";
 
-            addedPost.appendChild(deleteButton);
+        //     addedPost.appendChild(deleteButton);
     
-            addedPosts.push(addedPost);
+        //     addedPosts.push(addedPost);
             
-            mainContainer.appendChild(addedPost);
+        //     mainContainer.appendChild(addedPost);
 
 
-            for(var i = 0; i < addedPost.length; i++) {
-                addedPosts[i].children[0].setAttribute("id", i);
-                 addedPosts[i].children[0].addEventListener("click", function (e) {
-                console.log(e.target);
-                e.target.parentNode.remove();
-            });
-        }
+        //     for(var i = 0; i < addedPost.length; i++) {
+        //          deleteButton.addEventListener("click", function (e) {
+        //             e.target.parentNode.remove();
+        //     });
+        // }
             
     }
         document.getElementById("button").addEventListener("click",addPost);
