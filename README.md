@@ -6,8 +6,8 @@
 What I learned building this project
 
   Templating using view engine EJS
-Node JS as a runtime enviorment
-Express to create server and handle routes 
-How to connect front end to the backend
-MongoDB
+Node JS as a runtime enviorment,
+using Express to create server and handle routes,
+how to connect front-end to the backend and
+MongoDB and using the package mongoose to handle the MongoDB data
 
