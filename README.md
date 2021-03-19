@@ -5,9 +5,9 @@
                
 What I learned building this project
 
--Templating using view engine EJS
--Node JS as a runtime enviorment
--Express to create server and handle routes 
--How to connect front end to the backend
--MongoDB
+  Templating using view engine EJS
+Node JS as a runtime enviorment
+Express to create server and handle routes 
+How to connect front end to the backend
+MongoDB
 
