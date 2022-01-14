@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 // require('dotenv').config();
 const path = require('path');
 const bodyParser = require('body-parser');
+const expressSession = require('express-session');
 const ejsLint = require('ejs-lint');
 require('./model.js');
 
@@ -21,7 +22,7 @@ const port = 7012;
 
 const db = mongoose.connection;
 
-mongoose.connect('mongodb+srv://timtudosa18:Snake150!@first-cluster.fz0ml.mongodb.net/authenticationdb?retryWrites=true&w=majority',{useNewUrlParser:true,useUnifiedTopology:true}).then(()=>{console.log("MONGODB Database is connected!")}).catch((err)=>{console.log(err)});
+mongoose.connect('mongodb://localhost:27017',{useNewUrlParser:true,useUnifiedTopology:true}).then(()=>{console.log("MONGODB Database is connected!")}).catch((err)=>{console.log(err)});
 
 
 app.use(express.static(path.join(__dirname,'public')));
@@ -41,8 +42,6 @@ app.post('/signup',function(req,res) {
   var username = req.body.username;
   var password = req.body.password;
   var verifiedPassword = req.body.verifiedPassword;
-  console.log(firstName.length);
-
 
   var errors = [];
 
@@ -71,6 +70,7 @@ app.post('/signup',function(req,res) {
       });
       console.log("Signing you up!"
       );
+      res.render('dashboard',{name:req.body.firstName});
       res.redirect("/dashboard");    
   }
 });
@@ -86,7 +86,7 @@ app.post("/login",(req,res)=>{
     var loginErrors = [];
     var username = req.body.username;
     var password = req.body.password;
-    User.find({username:username,password:password},(user)=>{
+    User.find({username:username},(user)=>{
       if(!user) {
         loginErrors.push("Username or password does not exist");
         res.render('login',{errors:loginErrors});
@@ -103,13 +103,25 @@ app.get('/dashboard',(req,res)=>{
   res.render("dashboard");
 });
 
+app.post('/dashboard/addedPost',(req,res)=>{
+    console.log(req.params.id);
+    console.log(req.body);
+    res.render("dashboard");
+    res.redirect("/dashboard")
+});
 
-
-ejsLint("login.ejs");
+app.delete('/dashboard/addedPost/delete',(req,res)=>{
+    Post.deleteOne(req.body.id).then(()=>{
+      console.log("Deleted post!");
+    }).catch(err=>{
+      console.log(err);
+    });
+    res.render("dashboard");
+});
 
 app.listen(process.env.PORT || port,function(err){
   try {
-    console.log(`Server listening on port${port}`);
+    console.log(`Server listening on port ${port}`);
   }
 
   catch(err) {
