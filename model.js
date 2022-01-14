@@ -9,6 +9,17 @@ UserSchema = new mongoose.Schema({
   
   });
 
-  User = new mongoose.model('User',UserSchema);
+  PostSchema = new mongoose.Schema(
+    {
+      id:{type:Number},
+      title:{type:String},
+      body:{type:String},
+      date:{type:Date}
 
-  module.export = User;
+    }
+  );
+
+  User = new mongoose.model('User',UserSchema);
+  Post = new mongoose.model('Post',PostSchema);
+
+  module.export = User,Post
