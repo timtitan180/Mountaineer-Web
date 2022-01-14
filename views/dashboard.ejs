@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css">
      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.min.css">
-    <title>Document</title>
+    <title>Dashboard</title>
     <style>
 
         body,html {
@@ -22,6 +22,7 @@
             
 
         textarea {
+            margin-top:40px;
             margin-left:800px;
             height: 200px;
             width:400px;
@@ -99,16 +100,31 @@
 
         .posts {
             height: 100px;
-            width:160px;
+            width:300px;
             border:1px solid yellow;
 
             color:green;      
         }
 
+        .addedPost {
+            margin-top:20px;
+            border-radius: 14px;
+            border:0.5px solid gray;
+            margin-left:810px;
+            height:120px;
+            width:400px;
+            background-color:white;
+            color:yellow;
+        }
+
         #post {
+            font-size: medium;
+            height:205px;
+            padding-bottom:10px;
+            margin-top:40px;
             color:black;
-            margin-left:620px;
-            margin-top:10px;
+            margin-left:800px;
+            resize: none;
         }
 
         nav {
@@ -142,10 +158,14 @@
         }
 
         #mountain-icon {
-            height: 20px;
-            width:20px; 
+            height: 70px;
+            width:70px; 
             display: block;
-            position: relative;
+            position: absolute;
+        }
+
+        nav:nth-child(2) {
+            margin-top:20px;
         }
 
         #mountain-icon::after {
@@ -154,8 +174,9 @@
             z-index: -1;
         }
          #button {
-             position: relative;
-            margin-left:-83px;             
+             position: absolute;
+             margin-top:206px;
+            margin-left:-95px;             
          }
 
          #container-child {
@@ -175,11 +196,12 @@
     </style>
 </head>
 <body> 
-        <nav><span><img id="mountain-icon" src="https://www.google.com/url?sa=i&url=https%3A%2F%2Ftoppng.com%2Ffree-image%2Fmountain-png-transparent-free-images-clip-art-mountain-logo-PNG-free-PNG-Images_172015&psig=AOvVaw3yWx5Gh-47mzNUL56PQtsU&ust=1610207100048000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCND25O7WjO4CFQAAAAAdAAAAABAD"/></span><ul><li><a href="/">Home  |</a></li><li>About  | </li><li><a href="/signup">Sign Up</a></li><li><a href="/login">Sign In</a></li></ul></nav>     
-        <div class="createpostContainer">
-        <textarea id="post" placeholder="Write whats on your mind..."></textarea>
+        <nav><span><img id="mountain-icon" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRtsXbxmnPv4gkF0dCJGK4uvj2PR1hh_8VpLQ&usqp=CAU"/></span><ul><li><a href="/">Home</a></li><li>About</li><li><a href="/signup">Sign Up</a></li><li><a href="/login">Sign In</a></li></ul></nav>     
+        <div style="background-color:white;color:white;height:10px;width:200px;display:inline;"><p style="font-size:20px;font-family: Arial, Helvetica, sans-serif;">Hello <%=name%></p></div>
+        <form action="dashboard/addedPost" method="post" class="createpostContainer">
+        <textarea id="post" placeholder="Write whats on your mind..." name="post"></textarea>
         <button class="button is-primary" onclick="addPost" id="button">Send Post</button>
-    </div>
+        </form>
         <div class="mainContainer">
         </div>
     <script>
@@ -193,7 +215,7 @@
 
         function addPost() {
 
-            mainContainer.innerHTML += `<div style="display:flex-grid;border:2px solid white"><p style="color:yellow">${post.value}</p><button style="red" class="delete">DELETE</button></div>`
+            mainContainer.innerHTML += `<div class="addedPost" style="display:flex-grid;border:2px solid white"><p style="color:yellow">${post.value}</p><button style="red" class="delete">DELETE</button></div>`
 
             deletePost = document.querySelectorAll(".delete");
 
@@ -201,32 +223,7 @@
                 deletePost[i].onclick = function(){
                     this.parentNode.remove();
                 }
-             }
-        //     var addedPost = document.createElement("div");
-            
-        //     addedPost.classList.add("posts");
-            
-        //     addedPost.innerText = post.value;
-
-        //     var deleteButton = document.createElement("button");
-
-        //     deleteButton.classList.add("delete-button");
-
-        //     deleteButton.textContent = "DELETE";
-
-        //     addedPost.appendChild(deleteButton);
-    
-        //     addedPosts.push(addedPost);
-            
-        //     mainContainer.appendChild(addedPost);
-
-
-        //     for(var i = 0; i < addedPost.length; i++) {
-        //          deleteButton.addEventListener("click", function (e) {
-        //             e.target.parentNode.remove();
-        //     });
-        // }
-            
+             }           
     }
         document.getElementById("button").addEventListener("click",addPost);
         </script>
