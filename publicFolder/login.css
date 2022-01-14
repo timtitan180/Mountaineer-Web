@@ -17,6 +17,10 @@ max-width: 100%;
         display: block;
     }
 
+    #img {
+        height:100%;
+    }
+
 /* img {
     float:left;
     width:50%;
