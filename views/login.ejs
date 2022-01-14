@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title><link rel = "stylesheet"
+    <title>Login</title><link rel = "stylesheet"
    type="text/css" href="login.css" />
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.min.css">
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -11,9 +11,7 @@
 </head>
 <body>
     <div class="grid">
-    <div class="column" style="padding-bottom:40px;">
         <img src="https://scx2.b-cdn.net/gfx/news/2019/2-nature.jpg" id="image"/>
-    </div>
       <div class="column" style="height:1100px;border-left: 1px solid black;">
         <form method="POST" action="/login">
             <div class="errors">
@@ -21,6 +19,7 @@
                     <p style="color:red"><%=error%></p> 
                <% }); %>
             </div>
+            <h3>LOGIN</h3>
             <label>Username</label>
             <input autocomplete="off" class="input is-info" placeholder="Enter your username or email" name="username"/>
             <label>Password</label>

@@ -104,7 +104,6 @@ app.get('/dashboard',(req,res)=>{
 });
 
 app.post('/dashboard/addedPost',(req,res)=>{
-    console.log(req.params.id);
     console.log(req.body);
     res.render("dashboard");
     res.redirect("/dashboard")

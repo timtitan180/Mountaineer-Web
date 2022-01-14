@@ -22,4 +22,4 @@ UserSchema = new mongoose.Schema({
   User = new mongoose.model('User',UserSchema);
   Post = new mongoose.model('Post',PostSchema);
 
-  module.export = User,Post
+  module.export = User,Post;
