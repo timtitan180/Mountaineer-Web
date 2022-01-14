@@ -7,6 +7,12 @@
 
 }
 
+input {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: 500;
+    color: #0000f1;
+}
+
 .column {
   flex:1;
 }
