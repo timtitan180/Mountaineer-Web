@@ -6,20 +6,19 @@ UserSchema = new mongoose.Schema({
     lastName:{type:String},
     username:{type:String},
     password:{type:String},
-  
   });
 
-  PostSchema = new mongoose.Schema(
-    {
-      id:{type:Number},
-      title:{type:String},
-      body:{type:String},
-      date:{type:Date}
+  // PostSchema = new mongoose.Schema(
+  //   {
+  //     id:{type:Number},
+  //     title:{type:String},
+  //     body:{type:String},
+  //     date:{type:Date}
 
-    }
-  );
+  //   }
+  // );
 
-  User = new mongoose.model('User',UserSchema);
-  Post = new mongoose.model('Post',PostSchema);
+  User = new mongoose.model('Users',UserSchema);
+  // Post = new mongoose.model('Post',PostSchema);
 
-  module.export = User,Post;
+  module.export = User;

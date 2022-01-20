@@ -18,17 +18,44 @@ app.use(bodyParser.urlencoded({extended:false}));
 
 app.use(express.static(path.join(__dirname,"publicFolder")));
 
+const passport = require('passport');
+
+const LocalStrategy = require('passport-local');
+
 const port = 7012;
+
+
+mongoose.connect('mongodb://localhost:27017/mountaineerwebdb',{useNewUrlParser:true,useUnifiedTopology:true}).then(()=>{console.log("MONGODB Database is connected!")}).catch((err)=>{console.log(err)});
 
 const db = mongoose.connection;
 
-mongoose.connect('mongodb://localhost:27017',{useNewUrlParser:true,useUnifiedTopology:true}).then(()=>{console.log("MONGODB Database is connected!")}).catch((err)=>{console.log(err)});
+db.on("error", console.error.bind(console, "connection error: "));
 
+db.once("open",() => {
+  console.log("Connected successfully");
+});
 
 app.use(express.static(path.join(__dirname,'public')));
 
+function firstNameandLastNameisValid(firstName,lastName) {
+  return firstName.length > 0 && lastName.length > 0;
+}
+
+
+function UsernameisValid(username) {
+  return username.length > 0;
+}
+
+function PasswordisValid(password) {
+  return password.length > 0;
+}
+
 app.get('/',(req,res)=>{
   res.render("mainpage"); 
+});
+
+app.get('/error',(req,res)=>{
+    res.render("error");
 });
 
 app.get('/signup',(req,res)=>{
@@ -45,11 +72,15 @@ app.post('/signup',function(req,res) {
 
   var errors = [];
 
-  if(firstName.length == 0 || lastName.length == 0 || username.length == 0 || password.length == 0) {
-    errors.push("Please input all fields");
+  if(!firstNameandLastNameisValid(firstName,lastName)) {
+    errors.push("Please enter your first name and last name");
   }
 
-  if(password.length < 10) {
+  if(!UsernameisValid(username)){
+    errors.push("Please enter your username");
+  }
+
+  if(!PasswordisValid(password)){
     errors.push("Password must be at least 10 characters long");
   }
 
@@ -66,12 +97,11 @@ app.post('/signup',function(req,res) {
   else {
       const newUser = new User({firstName:firstName,lastName:lastName,username:username,password:password});
       newUser.save().then(()=>{console.log("User saved to database!")}).catch((err)=>{
-      console.log(err);
+      res.send("error.ejs");
       });
       console.log("Signing you up!"
-      );
-      res.render('dashboard',{name:req.body.firstName});
-      res.redirect("/dashboard");    
+      ); 
+      res.render('dashboard',{name:req.body.firstName}); 
   }
 });
 
@@ -79,43 +109,28 @@ app.post('/signup',function(req,res) {
 //Login Route
 
 app.get('/login',(req,res)=>{
-  res.render("login.ejs",{errors:[]});
+  //using passport to authenticate user
+  errors = [];
+  passport.use(new LocalStrategy(
+    function(username, password, done) {
+      User.findOne({ username: username,password:password}, function (err, user) {
+        if (err) {return done(err); }
+        if (!user) {errors.push("Username or password is incorrect"); return done(null, false); }
+        return done(null, user);
+      });
+    }
+  ));
+  res.render("login",{errors:errors});
 });
 
-app.post("/login",(req,res)=>{
-    var loginErrors = [];
-    var username = req.body.username;
-    var password = req.body.password;
-    User.find({username:username},(user)=>{
-      if(!user) {
-        loginErrors.push("Username or password does not exist");
-        res.render('login',{errors:loginErrors});
-        res.redirect('/login');
-      }
-      else {
-        res.render('dashboard');
-      }
+app.post("/login", passport.authenticate('local',{
+  failureRedirect:'/login',session:false}),(req,res)=>{
+      var username = req.body.username;
+      res.render("dashboard",{name:{username}});
     });
-
-});
 
 app.get('/dashboard',(req,res)=>{
   res.render("dashboard");
-});
-
-app.post('/dashboard/addedPost',(req,res)=>{
-    console.log(req.body);
-    res.render("dashboard");
-    res.redirect("/dashboard")
-});
-
-app.delete('/dashboard/addedPost/delete',(req,res)=>{
-    Post.deleteOne(req.body.id).then(()=>{
-      console.log("Deleted post!");
-    }).catch(err=>{
-      console.log(err);
-    });
-    res.render("dashboard");
 });
 
 app.listen(process.env.PORT || port,function(err){

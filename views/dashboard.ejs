@@ -120,6 +120,7 @@
         #post {
             font-size: medium;
             height:205px;
+            font-size:18px;
             padding-bottom:10px;
             margin-top:40px;
             color:black;
@@ -134,7 +135,7 @@
 
             ul {
             list-style-type: none;
-            margin: 0;
+            margin:0;
             padding: 0;
     }
 
@@ -196,12 +197,13 @@
     </style>
 </head>
 <body> 
-        <nav><span><img id="mountain-icon" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRtsXbxmnPv4gkF0dCJGK4uvj2PR1hh_8VpLQ&usqp=CAU"/></span><ul><li><a href="/">Home</a></li><li>About</li><li><a href="/signup">Sign Up</a></li><li><a href="/login">Sign In</a></li></ul></nav>     
+        <nav><span><img id="mountain-icon" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRtsXbxmnPv4gkF0dCJGK4uvj2PR1hh_8VpLQ&usqp=CAU"/></span><ul><li><a href="dashboard/delete" style="color:red"></a></li><li><a href="/">Home</a></li><li>About</li><li><a href="/signup">Sign Up</a></li><li><a href="/login">Sign In</a></li></ul></nav>     
         <div style="background-color:white;color:white;height:10px;width:200px;display:inline;"><p style="font-size:20px;font-family: Arial, Helvetica, sans-serif;">Hello <%=name%></p></div>
-        <form action="dashboard/addedPost" method="post" class="createpostContainer">
+        <div class="createpostContainer">
         <textarea id="post" placeholder="Write whats on your mind..." name="post"></textarea>
         <button class="button is-primary" onclick="addPost" id="button">Send Post</button>
-        </form>
+        </div>
+        </div>
         <div class="mainContainer">
         </div>
     <script>
@@ -215,7 +217,9 @@
 
         function addPost() {
 
-            mainContainer.innerHTML += `<div class="addedPost" style="display:flex-grid;border:2px solid white"><p style="color:yellow">${post.value}</p><button style="red" class="delete">DELETE</button></div>`
+            var date = new Date();
+
+            mainContainer.innerHTML += `<div class="addedPost" style="border:2px solid white;text-align:center"><a href="/delete" style="float:left;color:red" class="delete">DELETE</a><p style="margin-top:30px;color:black;font-size:16px">${post.value}</p><span></span><p style="margin-top:10px;color:gray">${date.toDateString()}</p></div>`
 
             deletePost = document.querySelectorAll(".delete");
 
